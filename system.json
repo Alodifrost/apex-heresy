@@ -11,35 +11,10 @@
   },
   "templateVersion": 2,
   "authors": [
-	{ 
-		"name":"" 
-	}, 
     { 
 		"name":"Apex",
 		"email": "",
 		"discord": "apexitek" 
-	}, 
-    { 
-		"name":"" 
-	},
-    {
-		"name":"" 
-	}, 
-    { 
-		"name":"", 
-		"discord":""
-	},
-    { 
-		"name":"" 
-	},
-    { 
-		"name":""
-	},
-    { 
-		"name":"" 
-	},
-	{ 	
-		"name":""
 	}
   ],
   "scripts": [],
