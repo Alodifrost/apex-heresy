@@ -71,7 +71,7 @@
   "secondaryTokenAttribute": null,
   "url": "https://github.com/Alodifrost/apex-heresy",
   "socket": true,
-  "manifest": "https://github.com/Alodifrost/apex-heresy/releases/latest/download/system.json",
+  "manifest": "https://raw.githubusercontent.com/Alodifrost/apex-heresy/main/system.json",
   "download": "https://github.com/Alodifrost/apex-heresy/releases/latest/download/system.zip",
   "license": "LICENSE.txt"
 }
