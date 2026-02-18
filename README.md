@@ -8,6 +8,8 @@
 
 Step into the dark and perilous universe of Warhammer 40,000, where you'll play as agents of the Inquisition investigating heresy, corruption, and the unspeakable horrors that threaten the Imperium of Man. Apex Heresy brings the complete Dark Heresy 2nd Edition experience to Foundry Virtual Tabletop, offering a comprehensive and immersive roleplaying system that captures the brutal reality and rich complexity of the 41st Millennium.
 
+**Multi-Game Support**: Apex Heresy is designed to support not just Dark Heresy 2nd Edition, but also Black Crusade and Only War campaigns. The system's flexible architecture allows Game Masters to adapt the ruleset to their preferred game variant while maintaining full compatibility with the core mechanics.
+
 ---
 
 ## What Makes Apex Heresy Special?
@@ -68,6 +70,50 @@ Game Masters can create and manage NPCs with the same depth as player characters
 
 Leverage Foundry VTT's powerful Active Effects system to automatically apply bonuses, penalties, and modifications from talents, traits, equipment, and conditions. This ensures that all modifiers are calculated correctly without manual tracking.
 
+### **Extensive Automation Without Compromising Flexibility**
+
+Apex Heresy implements the majority of automatable systems from Dark Heresy 2nd Edition, Black Crusade, and Only War, designed to streamline gameplay while preserving the universal nature of the ruleset. These automations reduce bookkeeping and calculation errors, allowing players and Game Masters to focus on the story rather than the mechanics.
+
+**Combat Automation**:
+- **Automatic Attack Resolution**: The system handles all attack rolls, hit location determination, and success/failure calculations automatically
+- **Automatic Damage Application**: Damage is calculated, applied to targets, and tracked automatically, including armor penetration and location-based protection
+- **Automatic Range Detection**: Weapon range modifiers are automatically calculated based on the distance between tokens on the game board (Point Blank, Short, Long, Extreme ranges)
+- **Automatic Rate of Fire**: The system automatically determines available attack modes (Single, Semi-Auto, Full-Auto, Wide-Auto) based on weapon capabilities and calculates required ammunition
+- **Automatic Size Modifiers**: Target size modifiers are automatically applied to ranged attacks, making combat against larger or smaller enemies seamless
+- **BLAST Grenade Automation**: Explosive weapons with BLAST properties automatically calculate area damage, apply damage to multiple targets in the blast radius, and handle mass evasion rolls
+- **Automatic Ammunition Consumption**: The system tracks and deducts ammunition based on attack type and rate of fire automatically
+- **Weapon Trait Automation**: Special weapon traits (Tearing, Proven, Primitive, Force, Devastating, etc.) are automatically applied to damage rolls and combat calculations
+- **Automatic Weapon Jams & Overheating**: The system tracks weapon reliability and automatically handles jams and overheating based on weapon properties
+
+**Horde System Automation**:
+- **Automatic Horde Size Tracking**: Horde size is automatically reduced when damage is dealt, with proper calculation of kills based on damage type and weapon traits
+- **Automatic Horde Attack Bonuses**: Attack bonuses against hordes are automatically calculated based on horde size (ranging from +30 to +60)
+- **Automatic Horde Damage Bonus Dice**: Additional damage dice against hordes are automatically added based on horde size
+- **Automatic Horde Kill Calculations**: The system automatically calculates kills against hordes based on Degrees of Success, weapon class, and special traits like Devastating
+- **Mass Combat Simplification**: Horde mechanics dramatically simplify running large-scale battles, making epic encounters manageable without losing tactical depth
+
+**Character System Automation**:
+- **Automatic Characteristic Calculations**: All characteristics are automatically calculated from base values, advances, temporary modifiers, and fatigue penalties
+- **Automatic Skill Calculations**: Skills automatically calculate their values from characteristics, advances, and specializations
+- **Automatic Movement Calculation**: Movement rates are automatically calculated from Agility bonus and size modifiers
+- **Automatic Armor Calculations**: Armor values are automatically calculated per body location, including toughness bonuses and penetration reductions
+- **Automatic Experience Cost Calculation**: Experience point costs for advances are automatically calculated based on aptitudes and current advancement levels
+- **Automatic Fatigue Penalties**: Fatigue automatically applies penalties to characteristics when active
+
+**Combat Modifier Automation**:
+- **Automatic Condition Effects**: Conditions like Blinded, Stunned, Prone, and others automatically modify combat rolls and capabilities
+- **Automatic Aiming Bonuses**: Aiming bonuses are automatically applied when characters take aim actions
+- **Automatic Evasion Calculations**: Evasion rolls automatically calculate success/failure and degrees of success
+- **Automatic Critical Hit Resolution**: Critical hits automatically trigger appropriate effects and damage calculations
+- **Automatic Righteous Fury**: Righteous Fury rolls are automatically handled and applied to damage
+
+**Psychic Power Automation**:
+- **Automatic Focus Power Tests**: Focus power tests are automatically calculated with proper difficulty modifiers
+- **Automatic Sustained Power Tracking**: Sustained powers are automatically tracked and their effects maintained
+- **Automatic Psy Rating Applications**: Psy Rating bonuses are automatically applied to psychic power tests and damage
+
+All these automations work seamlessly together, creating a smooth gameplay experience while maintaining the flexibility to handle edge cases and special situations. The system is designed to "just work" for standard situations while remaining fully customizable for unique scenarios.
+
 ---
 
 ## Key Features
@@ -78,17 +124,32 @@ Leverage Foundry VTT's powerful Active Effects system to automatically apply bon
 
 📊 **Detailed Character Sheets**: Beautiful, organized character sheets with tabs for combat, gear, abilities, progression, and more
 
-🎯 **Combat Automation**: Automatic hit location determination, damage calculation, armor application, and critical hit resolution
+🎯 **Comprehensive Combat Automation**: 
+- Automatic attack resolution with hit location determination
+- Automatic damage calculation and application
+- Automatic range detection based on token positions
+- Automatic rate of fire determination and ammunition consumption
+- Automatic size modifier application
+- BLAST grenade automation with area damage calculation
+- Automatic weapon trait application (Tearing, Proven, Force, Devastating, etc.)
+- Automatic weapon jam and overheating tracking
 
-⚡ **Psychic Power Management**: Complete support for psychic abilities with proper mechanics and risk management
+⚡ **Psychic Power Management**: Complete support for psychic abilities with proper mechanics, automatic focus power tests, and sustained power tracking
 
-🛡️ **Armor System**: Location-based armor with proper penetration calculations
+🛡️ **Armor System**: Location-based armor with automatic penetration calculations and toughness bonus application
 
 💊 **Equipment Tracking**: Comprehensive item management with weight, availability, and craftsmanship tracking
 
-📈 **Experience System**: Detailed XP tracking for characteristics, skills, talents, and psychic powers
+📈 **Experience System**: Detailed XP tracking with automatic cost calculation based on aptitudes
 
 🎭 **Rich Roleplaying Support**: Track home world, background, role, divinations, and all the flavor that makes Dark Heresy characters unique
+
+👥 **Advanced Horde System**: Fully automated horde mechanics that simplify mass combat:
+- Automatic horde size reduction based on damage
+- Automatic attack bonuses against hordes
+- Automatic damage bonus dice calculation
+- Automatic kill calculations based on weapon type and traits
+- Streamlined mass combat resolution
 
 ---
 
@@ -111,29 +172,38 @@ Leverage Foundry VTT's powerful Active Effects system to automatically apply bon
 
 ## What's Included
 
+- **Multi-Game Support**: Compatible with Dark Heresy 2nd Edition, Black Crusade, and Only War
 - Complete character creation system for Acolytes and NPCs
-- Full combat system with all attack types and damage calculations
+- Full combat system with all attack types and automated damage calculations
+- **Automated Range Detection**: Automatic calculation of range modifiers based on token positions
+- **Automated Rate of Fire**: Automatic determination of available attack modes and ammunition requirements
+- **Automated Size Modifiers**: Automatic application of size-based combat modifiers
+- **BLAST Grenade Automation**: Automatic area damage calculation and multi-target damage application
 - Comprehensive equipment database
-- Psychic powers system with multiple disciplines
+- Psychic powers system with multiple disciplines and automated focus power tests
 - Skill system with specializations
 - Talent and trait tracking
 - Corruption and Insanity mechanics
-- Critical injury system
-- Experience point and advancement tracking
-- Horde combat support
-- Active Effects integration
+- Critical injury system with automated resolution
+- Experience point and advancement tracking with automatic cost calculation
+- **Advanced Horde Combat**: Fully automated horde system for streamlined mass combat
+- Active Effects integration for automatic modifier application
 
 ---
 
 ## For Game Masters
 
-Apex Heresy provides powerful tools for running Dark Heresy campaigns:
+Apex Heresy provides powerful tools for running Dark Heresy 2nd Edition, Black Crusade, and Only War campaigns:
 
 - **NPC Management**: Create and manage NPCs with the same depth as player characters
-- **Horde Combat**: Handle large-scale battles with special horde mechanics
-- **Combat Automation**: Reduce bookkeeping with automatic damage and armor calculations
+- **Automated Horde Combat**: Handle large-scale battles effortlessly with fully automated horde mechanics that calculate bonuses, damage, and size reductions automatically
+- **Comprehensive Combat Automation**: Reduce bookkeeping dramatically with automatic damage application, armor calculations, range detection, and rate of fire management
+- **BLAST Weapon Support**: Run explosive encounters smoothly with automatic area damage calculation and multi-target resolution
+- **Automatic Range Detection**: No more manual range calculations—the system automatically determines range modifiers based on token positions
+- **Streamlined Mass Combat**: The automated horde system makes running epic battles manageable without losing tactical depth
 - **Effect Tracking**: Use Active Effects to manage conditions, bonuses, and penalties automatically
-- **Comprehensive Rolls**: All skill tests, combat rolls, and psychic power tests are built into the system
+- **Comprehensive Rolls**: All skill tests, combat rolls, and psychic power tests are built into the system with proper automation
+- **Flexible Rule Adaptation**: The system's universal design allows easy adaptation between Dark Heresy, Black Crusade, and Only War rulesets
 
 ---
 
