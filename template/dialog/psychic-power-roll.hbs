@@ -1,0 +1,139 @@
+<div class="dark-heresy dialog">
+    <div class="flex row wrap background border" style="flex-basis: 100%;margin-bottom: 5px">
+        <h1>{{localize name}}</h1>
+        <div class="wrapper">
+            <label>{{localize "DIALOG.TARGET"}}</label>
+            <input id="target" type="number" value="{{target.base}}" data-dtype="Number"/>
+        </div>
+        <div class="wrapper">
+            <label>{{localize "DIALOG.MODIFIER"}}</label>
+            <input id="modifier" type="text" value="{{target.modifier}}"/>
+        </div>
+        <div class="wrapper">
+            <label>{{localize "DIALOG.DIFFICULTY"}}</label>
+            <select id="difficulty">
+                {{selectOptions (config "difficulties") selected=difficulty localize=true}}
+            </select>
+        </div>
+        <div class="separator"></div>
+        <div class="wrapper">
+            <label>{{localize "DIALOG.PSY_RATING"}}</label>
+            <input id="rating" class="range psy-rating-slider" type="range" min="1" max="{{psy.max}}" value="{{psy.value}}" data-dtype="Number" />
+            <input id="psy" class="rangeBox psy-rating-input" type="number" value="{{psy.value}}" data-dtype="Number" />
+        </div>
+        <div class="wrapper">
+            <label>{{localize "PSYCHIC_POWER.CLASS"}}</label>
+            <select id="psyClass" class="psy-class-select" disabled>
+                {{selectOptions (config "psykerClass") selected=psy.class localize=true}}
+            </select>
+        </div>
+        <div class="wrapper">
+            <label>{{localize "DIALOG.PSY_BONUS"}}</label>
+            <input id="psyBonus" class="psy-bonus-display" type="text" readonly style="background-color: #f0f0f0;" />
+        </div>
+        <!--Done here because nothing else seemed to work. Open for better ideas-->
+        <script>
+            (function() {
+                // Use setTimeout to ensure DOM is ready
+                setTimeout(function() {
+                    // Find elements using jQuery within the dialog content
+                    // The script is inside the dialog content, so we can find parent and then search within it
+                    var scriptElement = document.currentScript || document.scripts[document.scripts.length - 1];
+                    var dialogContent = $(scriptElement).closest('.dark-heresy.dialog');
+                    
+                    if (dialogContent.length === 0) {
+                        // Fallback: try to find by class
+                        dialogContent = $('.dark-heresy.dialog').last();
+                    }
+                    
+                    var slider = dialogContent.find(".psy-rating-slider")[0];
+                    var output = dialogContent.find(".psy-rating-input")[0];
+                    var psyBonus = dialogContent.find(".psy-bonus-display")[0];
+                    var psyClassSelect = dialogContent.find(".psy-class-select")[0];
+                    var psyClass = psyClassSelect ? psyClassSelect.value : "bound";
+                    
+                    if (!slider || !output || !psyBonus) {
+                        console.warn("Dark Heresy: Could not find psy rating elements in dialog");
+                        return;
+                    }
+                    
+                    function updatePsyBonus() {
+                        var rating = parseInt(output.value) || 1;
+                        // Calculate bonus: +5 per displayed rating (including 1)
+                        // The displayed rating is already adjusted for Bound (divided by 2, rounded up)
+                        var bonus = rating * 5;
+                        
+                        psyBonus.value = bonus > 0 ? "+" + bonus : bonus;
+                    }
+                    
+                    slider.oninput = function() {
+                        var val = parseInt(this.value) || 1;
+                        // Ensure value is within bounds
+                        val = Math.max(1, Math.min(val, parseInt(slider.max) || 10));
+                        output.value = val;
+                        slider.value = val;
+                        updatePsyBonus();
+                    };
+                    
+                    output.oninput = function() {
+                        var val = parseInt(this.value) || 1;
+                        var maxVal = parseInt(slider.max) || 10;
+                        // Ensure value is within bounds
+                        val = Math.max(1, Math.min(val, maxVal));
+                        output.value = val;
+                        slider.value = val;
+                        updatePsyBonus();
+                    };
+                    
+                    // Initialize bonus display
+                    updatePsyBonus();
+                }, 100);
+            })();
+        </script>
+        <div class="wrapper damage">
+            <label>{{localize "DIALOG.DAMAGE"}}</label>
+            <input id="damageFormula" type="text" value="{{weapon.damageFormula}}"/>
+        </div>
+        <div class="wrapper damage">
+            <label>{{localize "DIALOG.TYPE"}}</label>
+            <select id="damageType">
+                {{selectOptions (config "damageTypes") selected=weapon.damageType localize=true}}
+            </select>
+        </div>
+        <div class="wrapper">
+            <label>{{localize "DIALOG.ATTACK_TYPE"}}</label>
+            <select id="attackType">
+                {{selectOptions (config "attackTypePsy") selected=attackType.name localize=true}}
+            </select>
+        </div>
+        <div class="wrapper">
+            <label>{{localize "DIALOG.BONUS"}}</label>
+            <input id="damageBonus" type="number" value="{{weapon.damageBonus}}" data-dtype="Number"/>
+        </div>
+        <div class="wrapper">
+            <label>{{localize "DIALOG.PENETRATION"}}</label>
+            <input id="penetration" type="text" value="{{weapon.penetrationFormula}}"/>
+        </div>
+        <div class=wrapper>
+            <label>{{localize "DIALOG.WARPCONDUIT"}}</label>
+            <input id="warpConduit" type="checkbox" value="{{psy.warpConduit}}" />
+        </div>
+    </div>
+</div>
+<script>
+    (function() {
+        // Use setTimeout to ensure DOM is ready
+        setTimeout(function() {
+            var scriptElement = document.currentScript || document.scripts[document.scripts.length - 1];
+            var dialogContent = $(scriptElement).closest('.dark-heresy.dialog');
+            
+            if (dialogContent.length === 0) {
+                dialogContent = $('.dark-heresy.dialog').last();
+            }
+            
+            dialogContent.find(".wrapper input").focusin(function () {
+                $(this).select();
+            });
+        }, 100);
+    })();
+</script>

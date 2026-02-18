@@ -1,0 +1,77 @@
+{
+  "id": "dark-heresy",
+  "title": "Apex Heresy",
+  "description": "Unofficial Foundry VTT System for Dark Heresy 2nd Edition/Black Crusade/Only War",
+  "version": "1.1.0",
+  "minimumCoreVersion" : 11,
+  "compatibility" : {
+    "minimum" : 12,
+    "verified" : 12,
+    "maximum" : 13
+  },
+  "templateVersion": 2,
+  "authors": [
+	{ 
+		"name":"" 
+	}, 
+    { 
+		"name":"Apex",
+		"email": "",
+		"discord": "apexitek" 
+	}, 
+    { 
+		"name":"" 
+	},
+    {
+		"name":"" 
+	}, 
+    { 
+		"name":"", 
+		"discord":""
+	},
+    { 
+		"name":"" 
+	},
+    { 
+		"name":""
+	},
+    { 
+		"name":"" 
+	},
+	{ 	
+		"name":""
+	}
+  ],
+  "scripts": [],
+  "esmodules": [
+    "script/dark-heresy.js"
+  ],
+  "styles": [
+    "css/dark-heresy.css"
+  ],
+  "packs": [
+    {
+      "name": "character-aptitudes",
+      "label": "Character Aptitudes",
+      "system": "apex-heresy",
+      "path": "./packs/aptitudes.db",
+      "type": "Item"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "gridDistance": 1,
+  "gridUnits": "m",
+  "primaryTokenAttribute": null,
+  "secondaryTokenAttribute": null,
+  "url": "https://github.com/Vendare/DarkHeresy2E-FoundryVTT",
+  "socket": true,
+  "manifest": "https://github.com/Vendare/DarkHeresy2E-FoundryVTT/releases/download/4.3.2.1/system.json",
+  "download": "https://github.com/Vendare/DarkHeresy2E-FoundryVTT/releases/download/4.3.2.1/dark-heresy.zip",
+  "license": "LICENSE.txt"
+}

@@ -1,0 +1,20 @@
+# Foundry VTT lock files
+**/LOCK
+**/*.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node modules (if any)
+node_modules/
+package-lock.json
+yarn.lock

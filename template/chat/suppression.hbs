@@ -1,0 +1,22 @@
+<div class="dark-heresy chat roll">
+    <div class="background border">
+        <h1>{{localize "SUPPRESSION.HEADER"}} ({{target.final}})</h1>
+        {{#if flags.isSuccess}}
+        <h3 class="dh-outcome success" style="color: var(--color-success)">{{localize "CHAT.SUCCESS"}} <span>({{result}})</span></h3>
+        {{else}}
+        <h3 class="dh-outcome failure" style="color: var(--color-failure)">{{localize "CHAT.FAILURE"}} <span>({{result}})</span></h3>
+        {{/if}}
+        <p><strong>{{localize "CHAT.TEST_MODIFIER"}}:</strong> {{target.modifier}} {{#if suppressionModifier}}({{localize "SUPPRESSION.HEADER"}} {{signed suppressionModifier}}){{/if}}</p>
+        {{#if targetName}}
+            <p><strong>{{localize "CHAT.TARGET"}}:</strong> {{targetName}}</p>
+        {{/if}}
+        {{#if flags.isSuccess}}
+            <p><strong>{{localize "CHAT.DOS"}}:</strong> {{dos}}</p>
+        {{else}}
+            <p><strong>{{localize "CHAT.DOF"}}:</strong> {{dof}}</p>
+        {{/if}}
+        {{#if hasFear}}
+            <p><strong style="color: var(--color-failure)">{{localize "SUPPRESSION.FEAR_APPLIED"}}</strong></p>
+        {{/if}}
+    </div>
+</div>

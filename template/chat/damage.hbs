@@ -1,0 +1,87 @@
+<div class="dark-heresy chat roll impmal-test damage-card" data-actor-id="{{ownerId}}" data-item-id="{{itemId}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+    <div class="roll-card-background">
+        <h1>{{itemName}}</h1>
+        
+        {{#if targets}}
+            <div class="damage-target">
+                <strong>{{localize "CHAT.TARGET"}}:</strong>
+                <a class="dh-chat-target" data-token-id="{{targets.[0].tokenId}}" data-scene-id="{{targets.[0].sceneId}}">{{targets.[0].name}}</a>
+            </div>
+        {{/if}}
+        
+        {{#each damages as |damage|}}
+            <div class="damage-section">
+                <h3 class="damage-location" data-location={{damage.location}}>{{localize damage.location}}</h3>
+                
+                <div class="damage-values">
+                    <div class="damage-value-box">
+                        <div class="damage-label">{{localize "CHAT.DAMAGE"}}</div>
+                        <div class="damage-total">{{damage.total}}</div>
+                        <div class="damage-type">{{damageTypeShort ../weapon.damageType}}</div>
+                    </div>
+                    
+                    <div class="damage-value-box">
+                        <div class="damage-label">{{localize "CHAT.PENETRATION"}}</div>
+                        <div class="damage-penetration">{{damage.penetration}}</div>
+                    </div>
+                    
+                    {{#if damage.righteousFury}}
+                    <div class="damage-value-box special">
+                        <div class="damage-label">{{localize "CHAT.RIGHTEOUS_FURY"}}</div>
+                        <div class="damage-righteous-fury">{{damage.righteousFury}}</div>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        {{/each}}
+        
+        {{#if appliedDetails}}
+            <details class="applied-damage-section">
+                <summary class="section-title">{{localize "CHAT.APPLIED_DAMAGE"}}</summary>
+                <div class="applied-damage-content">
+                    {{#each appliedDetails}}
+                    <div class="applied-damage-line">
+                        <span class="damage-amount">{{damage}}</span>
+                        <span class="damage-type-text">{{damageTypeLong type}}</span>
+                        <span class="damage-source">{{localize "CHAT.AS"}} {{source}}</span>
+                        <span class="damage-location-text">({{localize location}})</span>
+                    </div>
+                    {{/each}}
+                </div>
+            </details>
+        {{/if}}
+        
+        {{#if applied}}
+            <div class="applied-summary">
+                <div class="applied-damage-line summary">
+                    <span class="damage-label">{{localize "WOUND.CURRENT"}}:</span>
+                    <span class="damage-value">{{applied.wounds}}</span>
+                    <span class="damage-label">{{localize "WOUND.CRITICAL_DAMAGE"}}:</span>
+                    <span class="damage-value">{{applied.critical}}</span>
+                </div>
+            </div>
+        {{/if}}
+        
+        {{#if canRevert}}
+            <div class="effect-buttons">
+                <button type="button" class="manual-damage-undo">{{localize "CHAT.MANUAL_DAMAGE"}}</button>
+            </div>
+        {{/if}}
+        
+        <div class="dice-rolls" style="display:none">
+            <h1>{{localize "CHAT.ROLL_TITLE"}}</h1>
+            {{#each damages as |damage|}}
+                <p><strong>{{localize "CHAT.DAMAGE_HEADER"}}</strong></p>
+                <div class="dice-roll-render">
+                    {{{damage.damageRender}}}
+                </div>
+                {{#if damage.accurateRender}}
+                    <p><strong>{{localize "CHAT.ACCURATE_HEADER"}}</strong></p>
+                    <div class="dice-roll-render">
+                        {{{damage.accurateRender}}}
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</div>
