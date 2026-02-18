@@ -6,7 +6,7 @@
 
 ## Important Notice & Project Support
 
-**Project Distribution & Support**: This system is distributed through Boosty (a Patreon equivalent) by the author for a nominal contribution. This support is essential for the continued development, maintenance, and creation of compendiums and modules for this project. 
+**Project Distribution & Support**: This system is distributed through Boosty https://boosty.to/reforgerp (a Patreon equivalent) by the author for a nominal contribution. This support is essential for the continued development, maintenance, and creation of compendiums and modules for this project. 
 
 While you are free to share this system with your colleagues and gaming groups, I earnestly request that you support the project in some way. Your support enables the continued development of modules, compendiums, and additional content for this system, as I am committed to reviving the classic FFG systems on Foundry VTT with modern implementations.
 
