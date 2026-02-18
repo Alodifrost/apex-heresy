@@ -69,9 +69,9 @@
   "gridUnits": "m",
   "primaryTokenAttribute": null,
   "secondaryTokenAttribute": null,
-  "url": "https://github.com/Vendare/DarkHeresy2E-FoundryVTT",
+  "url": "https://github.com/Alodifrost/apex-heresy",
   "socket": true,
-  "manifest": "https://github.com/Vendare/DarkHeresy2E-FoundryVTT/releases/download/4.3.2.1/system.json",
-  "download": "https://github.com/Vendare/DarkHeresy2E-FoundryVTT/releases/download/4.3.2.1/dark-heresy.zip",
+  "manifest": "https://github.com/Alodifrost/apex-heresy/releases/latest/download/system.json",
+  "download": "https://github.com/Alodifrost/apex-heresy/releases/latest/download/system.zip",
   "license": "LICENSE.txt"
 }
