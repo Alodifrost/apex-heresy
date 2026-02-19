@@ -1,0 +1,234 @@
+<div class="dark-heresy chat roll impmal-test" data-actor-id="{{ownerId}}" data-item-id="{{itemId}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+    <div class="roll-card-background">
+        {{#if isReRoll}}
+            <h1>{{localize "CHAT.REROLL"}}</h1>
+        {{else}}
+            {{#if itemName}}
+                <h1>{{itemName}}</h1>
+            {{else if weapon.name}}
+                <h1>{{weapon.name}}</h1>
+            {{else if name}}
+                <h1>{{name}}</h1>
+            {{/if}}
+        {{/if}}
+        
+        {{#if weaponJammed}}
+            <div class="weapon-jam-notice">
+                <div class="jam-icon">⚠</div>
+                <div class="jam-text">JAM</div>
+            </div>
+        {{/if}}
+        
+        {{#if weaponOverheated}}
+            <div class="weapon-overheat-notice">
+                <div class="overheat-icon">🔥</div>
+                <div class="overheat-text">OVERHEAT</div>
+            </div>
+        {{/if}}
+        
+        <div class="sl-container {{#unless flags.isSuccess}}failure{{/unless}}">
+            <div class="roll-value-wrapper">
+                <div class="roll-value">
+                    {{#if result}}
+                        {{result}}
+                    {{else}}
+                        —
+                    {{/if}}
+                </div>
+            </div>
+            <div class="sl {{#unless flags.isSuccess}}failure{{/unless}}">
+                <div class="sl-value">
+                    {{#if flags.isSuccess}}
+                        {{#if dos}}
+                            +{{dos}}
+                        {{else}}
+                            —
+                        {{/if}}
+                    {{else}}
+                        {{#if dof}}
+                            {{dof}}
+                        {{else}}
+                            —
+                        {{/if}}
+                    {{/if}}
+                </div>
+                {{#if flags.isAttack}}
+                    {{#if flags.isSuccess}}
+                        {{#if numberOfHits}}
+                            <div class="sl-label">Hits: {{numberOfHits}}</div>
+                        {{/if}}
+                    {{/if}}
+                {{/if}}
+            </div>
+            <div class="target-value-wrapper">
+                <div class="target-value">
+                    {{target.final}}
+                </div>
+            </div>
+        </div>
+        
+        <p class="centered">
+            <strong>
+                {{#if flags.isSuccess}}
+                    {{localize "CHAT.SUCCESS"}}
+                {{else}}
+                    {{localize "CHAT.FAILURE"}}
+                {{/if}}
+            </strong>
+        </p>
+        
+        <div class="test-details">
+            <div class="tags">
+                {{#if flags.isAttack}}
+                    {{#if attackType}}
+                        <div>{{attackType.text}}</div>
+                    {{/if}}
+                    {{#if weapon.damageType}}
+                        <div>{{damageTypeLong weapon.damageType}}</div>
+                    {{/if}}
+                {{/if}}
+                {{#if difficulty}}
+                    <div>{{difficulty.text}}</div>
+                {{/if}}
+            </div>
+            
+            <table class="details-table">
+                <tbody>
+                    <tr>
+                        <td class="label">{{localize "CHAT.CLEAR_STAT"}}</td>
+                        <td class="value">{{target.base}}</td>
+                    </tr>
+                    {{#if target.modifier}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.TEST_MODIFIER"}}</td>
+                        <td class="value">{{signed target.modifier}}</td>
+                    </tr>
+                    {{/if}}
+                    {{#if rolledWith}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.ROLLED_WITH"}}</td>
+                        <td class="value">{{rolledWith}}</td>
+                    </tr>
+                    {{/if}}
+                    {{#if aim}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.AIMING"}}</td>
+                        <td class="value">{{aim.text}} ({{signed aim.val}})</td>
+                    </tr>
+                    {{/if}}
+                    {{#if difficulty}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.DIFFICULTY"}}</td>
+                        <td class="value">{{difficulty.text}} ({{signed difficulty.value}})</td>
+                    </tr>
+                    {{/if}}
+                    {{#if unnaturalDosBonus}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.UNNATURAL_DOS"}}</td>
+                        <td class="value">{{signed unnaturalDosBonus}}</td>
+                    </tr>
+                    {{/if}}
+                    {{#if flags.isAttack}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.ATTACK_RANGE"}}</td>
+                        <td class="value">{{rangeModText}} ({{signed rangeMod}})</td>
+                    </tr>
+                    {{/if}}
+                    {{#if attackType}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.ATTACK_TYPE"}}</td>
+                        <td class="value">{{attackType.text}} ({{signed attackType.modifier}})</td>
+                    </tr>
+                    {{/if}}
+                    {{#if flags.isAttack}}
+                        {{#if weapon.special}}
+                        <tr>
+                            <td class="label">Weapon Special</td>
+                            <td class="value">{{weapon.special}}</td>
+                        </tr>
+                        {{/if}}
+                    {{/if}}
+                    {{#if targetConditionModifier}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.TARGET_CONDITION"}}</td>
+                        <td class="value">{{localize "CONDITION.STUNNED"}} ({{signed targetConditionModifier}})</td>
+                    </tr>
+                    {{/if}}
+                    {{#if targetSizeModifier}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.TARGET_SIZE"}}</td>
+                        <td class="value">{{localize "SIZE"}} ({{signed targetSizeModifier}})</td>
+                    </tr>
+                    {{/if}}
+                    {{#if actorConditionModifier}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.ACTOR_CONDITION"}}</td>
+                        <td class="value">{{localize "CONDITION.FEAR"}} ({{signed actorConditionModifier}})</td>
+                    </tr>
+                    {{/if}}
+                    {{#if targets}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.TARGET"}}</td>
+                        <td class="value">
+                            {{#each targets}}
+                                <a class="dh-chat-target" data-token-id="{{tokenId}}" data-scene-id="{{sceneId}}">{{name}}</a>{{#unless @last}}, {{/unless}}
+                            {{/each}}
+                        </td>
+                    </tr>
+                    {{/if}}
+                    {{#if psy.display}}
+                        {{#if psy.push}}
+                            {{#if psy.isUnbrake}}
+                            <tr>
+                                <td class="label">{{localize "CHAT.PSY_RATING"}}</td>
+                                <td class="value">{{psy.initialRating}} - {{psy.value}} ({{localize "CHAT.PSY_UNBRAKE"}})</td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td class="label">{{localize "CHAT.PSY_RATING"}}</td>
+                                <td class="value">{{psy.initialRating}} - {{psy.value}} ({{localize "CHAT.PSY_PUSH"}})</td>
+                            </tr>
+                            {{/if}}
+                        {{else}}
+                        <tr>
+                            <td class="label">{{localize "CHAT.PSY_RATING"}}</td>
+                            <td class="value">{{psy.value}}</td>
+                        </tr>
+                        {{/if}}
+                        {{#if psy.isUnbound}}
+                        <tr>
+                            <td class="label"></td>
+                            <td class="value error-text">{{localize "CHAT.PSY_UNBOUND"}}</td>
+                        </tr>
+                        {{/if}}
+                        {{#if psy.hasPhenomena}}
+                            {{#if psy.warpConduit}}
+                            <tr>
+                                <td class="label"></td>
+                                <td class="value error-text">{{localize "CHAT.HAS_PSYCHIC_PHENOMENA_WITH_WARPCONDUIT"}}</td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td class="label"></td>
+                                <td class="value error-text">{{localize "CHAT.HAS_PSYCHIC_PHENOMENA"}}</td>
+                            </tr>
+                            {{/if}}
+                        {{/if}}
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+        
+        {{#if flags.isAttack}}
+            {{#if flags.isSuccess}}
+                <div class="effect-buttons">
+                    <button type="button" class="invoke-test">{{localize "CHAT.ROLL_EVASION"}}</button>
+                    {{#if (eq attackType.name "suppression")}}
+                        <button type="button" class="invoke-suppression">{{localize "SUPPRESSION.HEADER"}}</button>
+                    {{/if}}
+                    <button type="button" class="invoke-damage">{{localize "CHAT.ROLL_DAMAGE"}}</button>
+                </div>
+            {{/if}}
+        {{/if}}
+    </div>
+</div>

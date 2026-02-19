@@ -1,0 +1,94 @@
+<div class="dark-heresy chat roll impmal-test fire-effect" data-actor-id="{{ownerId}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+    <div class="roll-card-background">
+        <h1>
+            <i class="fas fa-fire"></i>
+            {{localize "CONDITION.FIRE"}} - {{localize "EFFECTS.ON_TURN"}}
+        </h1>
+        
+        <!-- Compact effects grid -->
+        <div class="fire-effects-grid">
+            <!-- Fire Damage -->
+            <div class="fire-effect-item damage">
+                <div class="effect-icon">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="effect-content">
+                    <div class="effect-label">{{localize "EFFECTS.FIRE_DAMAGE"}}</div>
+                    <div class="effect-value">
+                        <span class="value-main">{{damageAmount}}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fatigue -->
+            <div class="fire-effect-item fatigue">
+                <div class="effect-icon">
+                    <i class="fas fa-tired"></i>
+                </div>
+                <div class="effect-content">
+                    <div class="effect-label">{{localize "EFFECTS.FIRE_FATIGUE"}}</div>
+                    <div class="effect-value">
+                        <span class="value-main">+{{fatigueApplied}}</span>
+                        <span class="value-total">({{newFatigue}}/{{maxFatigue}})</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Willpower Test (in roll card style) -->
+        <div class="willpower-test-section">
+            <div class="test-label">{{localize "EFFECTS.FIRE_WILLPOWER_TEST"}}</div>
+            <div class="sl-container {{#unless flags.isSuccess}}failure{{/unless}}">
+                <div class="roll-value-wrapper">
+                    <div class="roll-value">
+                        {{#if result}}
+                            {{result}}
+                        {{else}}
+                            —
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="sl {{#unless flags.isSuccess}}failure{{/unless}}">
+                    <div class="sl-value">
+                        {{#if flags.isSuccess}}
+                            {{#if dos}}
+                                +{{dos}}
+                            {{else}}
+                                —
+                            {{/if}}
+                        {{else}}
+                            {{#if dof}}
+                                {{dof}}
+                            {{else}}
+                                —
+                            {{/if}}
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="target-value-wrapper">
+                    <div class="target-value">
+                        {{target.final}}
+                    </div>
+                </div>
+            </div>
+            
+            <p class="centered">
+                <strong>
+                    {{#if flags.isSuccess}}
+                        {{localize "CHAT.SUCCESS"}}
+                    {{else}}
+                        {{localize "CHAT.FAILURE"}}
+                    {{/if}}
+                </strong>
+            </p>
+            
+            <div class="test-details">
+                <div class="tags">
+                    {{#if difficulty}}
+                        <div>{{difficulty.text}}</div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

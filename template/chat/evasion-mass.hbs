@@ -1,0 +1,67 @@
+<div class="dark-heresy chat roll impmal-test mass-evasion-card" data-actor-id="{{ownerId}}" data-item-id="{{itemId}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+    <div class="roll-card-background">
+        <h1>{{localize "CHAT.MASS_EVASION_RESULTS"}}</h1>
+        
+        <div class="mass-evasion-header">
+            <div class="mass-evasion-info">
+                <span class="info-label">{{localize "CHAT.DEFENSE"}}:</span>
+                <span class="info-value">{{massEvasionLabel}}</span>
+            </div>
+        </div>
+        
+        <div class="mass-results">
+            {{#each massEvasionResults as |result|}}
+                <div class="mass-result-card {{#unless result.isSuccess}}failure{{/unless}}">
+                    <div class="mass-result-header">
+                        <div class="mass-target-name">
+                            <a class="dh-chat-target" data-token-id="{{result.target.tokenId}}" data-scene-id="{{result.target.sceneId}}">{{result.target.name}}</a>
+                        </div>
+                        <div class="mass-result-comparison">
+                            <span class="mass-roll-value">{{result.result}}</span>
+                            <span class="mass-vs">vs</span>
+                            <span class="mass-target-value">{{result.targetFinal}}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mass-result-sl">
+                        <div class="mass-sl-value {{#unless result.isSuccess}}failure{{/unless}}">
+                            {{#if result.isSuccess}}
+                                {{#if result.dos}}
+                                    +{{result.dos}}
+                                {{else}}
+                                    —
+                                {{/if}}
+                            {{else}}
+                                {{#if result.dof}}
+                                    {{result.dof}}
+                                {{else}}
+                                    —
+                                {{/if}}
+                            {{/if}}
+                        </div>
+                        <div class="mass-outcome {{#if result.isSuccess}}success{{else}}failure{{/if}}">
+                            {{#if result.isSuccess}}
+                                {{localize "CHAT.SUCCESS"}}
+                            {{else}}
+                                {{localize "CHAT.FAILURE"}}
+                            {{/if}}
+                        </div>
+                    </div>
+                    
+                    {{#if result.targetModifier}}
+                    <div class="mass-result-details">
+                        <table class="details-table">
+                            <tbody>
+                                <tr>
+                                    <td class="label">{{localize "CHAT.TEST_MODIFIER"}}</td>
+                                    <td class="value">{{signed result.targetModifier}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    {{/if}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

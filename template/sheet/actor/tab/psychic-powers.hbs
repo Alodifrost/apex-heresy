@@ -1,0 +1,38 @@
+<div class="flex wrap psychic">
+    <div class="psychic-powers border">
+        <h1>{{localize "TITLE.PSYCHIC_POWERS"}}</h1>
+        <div class="item-list">
+            <div class="flex header">
+                <b class="name">{{localize "PSYCHIC_POWER.NAME"}}</b>
+                <b class="short">{{localize "PSYCHIC_POWER.SHORT_DESCRIPTION"}}</b>
+                <a class="button item-create" title="Add Psychic Power" data-type="psychicPower"><i class="fas fa-plus"></i></a>
+            </div>
+            <div class="items">
+                {{#each items.psychicPowers as |item|}}
+                    <div class="psychic-power psychic-block" data-item-id="{{item.id}}">
+                        <input type="checkbox" class="psychic-toggle" id="psychic-notes-{{item.id}}">
+                        <div class="item psychic-row flex row">
+                            <div class="toggle">
+                                <label for="psychic-notes-{{item.id}}"><i class="fas fa-chevron-down"></i></label>
+                            </div>
+                            <div class="flex name item-edit">
+                                <div class="image-container">
+                                    <div class="image" style="background-image: url('{{item.img}}')"></div>
+                                </div>
+                                <div class="psychic-name">{{item.name}}</div>
+                            </div>
+                            <div class="short-text">{{item.shortDescription}}</div>
+                            <div class="button">
+                                <a class="item-control item-chat" title="Post to Chat"><i class="fas fa-comment"></i></a>
+                                <a class="item-control item-delete" title="Delete Psychic Power"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                        <div class="psychic-notes">
+                            {{{system.description}}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

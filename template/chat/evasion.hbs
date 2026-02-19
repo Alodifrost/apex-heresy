@@ -1,0 +1,92 @@
+<div class="dark-heresy chat roll impmal-test" data-actor-id="{{ownerId}}" data-item-id="{{itemId}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+    <div class="roll-card-background">
+        {{#if isReRoll}}
+            <h1>{{localize "CHAT.REROLL"}}</h1>
+        {{else}}
+            <h1>{{name}}</h1>
+        {{/if}}
+        
+        <div class="sl-container {{#unless flags.isSuccess}}failure{{/unless}}">
+            <div class="roll-value-wrapper">
+                <div class="roll-value">
+                    {{#if result}}
+                        {{result}}
+                    {{else}}
+                        —
+                    {{/if}}
+                </div>
+            </div>
+            <div class="sl {{#unless flags.isSuccess}}failure{{/unless}}">
+                <div class="sl-value">
+                    {{#if flags.isSuccess}}
+                        {{#if dos}}
+                            +{{dos}}
+                        {{else}}
+                            —
+                        {{/if}}
+                    {{else}}
+                        {{#if dof}}
+                            {{dof}}
+                        {{else}}
+                            —
+                        {{/if}}
+                    {{/if}}
+                </div>
+                {{#if numberOfHits}}
+                    <div class="sl-label">{{localize "CHAT.REMAINING_NUMBER_OF_HIT"}}: {{numberOfHits}}</div>
+                {{/if}}
+            </div>
+            <div class="target-value-wrapper">
+                <div class="target-value">
+                    {{target.final}}
+                </div>
+            </div>
+        </div>
+        
+        <p class="centered">
+            <strong>
+                {{#if flags.isSuccess}}
+                    {{localize "CHAT.SUCCESS"}}
+                {{else}}
+                    {{localize "CHAT.FAILURE"}}
+                {{/if}}
+            </strong>
+        </p>
+        
+        <div class="test-details">
+            <div class="tags">
+                {{#if evasionActor}}
+                    <div>
+                        {{localize "CHAT.ROLLED_BY"}}: 
+                        {{#if evasionActorTokenId}}
+                            <a class="dh-chat-target" data-token-id="{{evasionActorTokenId}}" data-scene-id="{{evasionActorSceneId}}">{{evasionActor}}</a>
+                        {{else}}
+                            {{evasionActor}}
+                        {{/if}}
+                    </div>
+                {{/if}}
+            </div>
+            
+            <table class="details-table">
+                <tbody>
+                    <tr>
+                        <td class="label">{{localize "CHAT.CLEAR_STAT"}}</td>
+                        <td class="value">{{target.base}}</td>
+                    </tr>
+                    {{#if target.modifier}}
+                    <tr>
+                        <td class="label">{{localize "CHAT.TEST_MODIFIER"}}</td>
+                        <td class="value">{{signed target.modifier}}</td>
+                    </tr>
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+        
+        {{#if numberOfHits}}
+            <div class="effect-buttons">
+                <button type="button" class="invoke-damage">{{localize "CHAT.ROLL_DAMAGE"}}</button>
+            </div>
+        {{/if}}
+    </div>
+</div>

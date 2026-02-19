@@ -1,0 +1,52 @@
+{
+  "id": "dark-heresy",
+  "title": "Apex Heresy",
+  "description": "Unofficial Foundry VTT System for Dark Heresy 2nd Edition/Black Crusade/Only War",
+  "version": "0.0.2",
+  "minimumCoreVersion" : 11,
+  "compatibility" : {
+    "minimum" : 12,
+    "verified" : 12,
+    "maximum" : 13
+  },
+  "templateVersion": 2,
+  "authors": [
+    { 
+		"name":"Apex",
+		"email": "",
+		"discord": "apexitek" 
+	}
+  ],
+  "scripts": [],
+  "esmodules": [
+    "script/dark-heresy.js"
+  ],
+  "styles": [
+    "css/dark-heresy.css"
+  ],
+  "packs": [
+    {
+      "name": "character-aptitudes",
+      "label": "Character Aptitudes",
+      "system": "apex-heresy",
+      "path": "./packs/aptitudes.db",
+      "type": "Item"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "gridDistance": 1,
+  "gridUnits": "m",
+  "primaryTokenAttribute": "system.wounds",
+  "secondaryTokenAttribute": "system.fate",
+  "url": "https://github.com/Alodifrost/apex-heresy",
+  "socket": true,
+  "manifest": "https://raw.githubusercontent.com/Alodifrost/apex-heresy/main/system.json",
+  "download": "https://github.com/Alodifrost/apex-heresy/releases/latest/download/system.zip",
+  "license": "LICENSE.txt"
+}

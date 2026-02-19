@@ -1,0 +1,145 @@
+﻿<div class="dark-heresy chat item">
+    <div class="background border">
+        <h1>{{item.type}}&#58; {{item.name}}</h1>
+        {{#if item.img}}
+        <img src="{{item.img}}" title="{{item.name}}"/>
+        {{/if}}
+
+        {{#if item.isAmmunition}}
+        {{#if item.weapon}}<p><strong>{{localize "AMMUNITION.WEAPON"}}:</strong> {{item.weapon}}</p>{{/if}}
+        {{#if item.effect.damage.modifier}}<p><strong>{{localize "AMMUNITION.DAMAGE"}}:</strong> {{item.effect.damage.modifier}}{{#if item.DamageType}} {{item.DamageType}}{{/if}}</p>{{/if}}
+        {{#if item.effect.attack.modifier}}<p><strong>{{localize "AMMUNITION.ATTACK"}}:</strong> {{item.effect.attack.modifier}}</p>{{/if}}
+        {{#if item.effect.penetration}}<p><strong>{{localize "AMMUNITION.PENETRATION"}}:</strong> {{item.effect.penetration}}</p>{{/if}}
+        {{#if item.effect.special}}<p><strong>{{localize "AMMUNITION.SPECIAL"}}:</strong> {{item.effect.special}}</p>{{/if}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{#if item.weight}}<p><strong>{{localize "AMMUNITION.WEIGHT"}}:</strong> {{item.weight}}</p>{{/if}}
+        {{#if item.Craftsmanship}}<p><strong>{{localize "AMMUNITION.CRAFTSMANSHIP"}}:</strong> {{item.Craftsmanship}}</p>{{/if}}
+        {{#if item.Availability}}<p><strong>{{localize "AMMUNITION.AVAILABILITY"}}:</strong> {{item.Availability}}</p>{{/if}}
+        {{/if}}
+
+        {{#if item.isArmour}}
+        {{#if item.ArmourType}}<p><strong>{{localize "ARMOUR.TYPE"}}:</strong> {{item.ArmourType}}</p>{{/if}}
+        {{#if item.Part}}<p><strong>{{localize "ARMOUR.PART"}}:</strong> {{item.Part}}</p>{{/if}}
+        {{#if item.maxAgility}}<p><strong>{{localize "ARMOUR.MAX_AGILITY"}}:</strong> {{item.maxAgility}}</p>{{/if}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{#if item.weight}}<p><strong>{{localize "ARMOUR.WEIGHT"}}:</strong> {{item.weight}}</p>{{/if}}
+        {{#if item.Craftsmanship}}<p><strong>{{localize "ARMOUR.CRAFTSMANSHIP"}}:</strong> {{item.Craftsmanship}}</p>{{/if}}
+        {{#if item.Availability}}<p><strong>{{localize "ARMOUR.AVAILABILITY"}}:</strong> {{item.Availability}}</p>{{/if}}
+        {{/if}}
+
+        {{#if item.isCriticalInjury}}
+        {{#if item.DamageType}}<p><strong>{{localize "CRITICAL_INJURY.TYPE"}}:</strong> {{item.DamageType}}</p>{{/if}}
+        {{#if item.PartLocation}}<p><strong>{{localize "CRITICAL_INJURY.PART"}}:</strong> {{item.PartLocation}}</p>{{/if}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{/if}}
+
+        {{#if item.isCybernetic}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{#if item.weight}}<p><strong>{{localize "CYBERNETIC.WEIGHT"}}:</strong> {{item.weight}}</p>{{/if}}
+        {{#if item.Craftsmanship}}<p><strong>{{localize "CYBERNETIC.CRAFTSMANSHIP"}}:</strong> {{item.Craftsmanship}}</p>{{/if}}
+        {{#if item.Availability}}<p><strong>{{localize "CYBERNETIC.AVAILABILITY"}}:</strong> {{item.Availability}}</p>{{/if}}
+        {{/if}}
+
+        {{#if item.isDrug}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{#if item.weight}}<p><strong>{{localize "DRUG.WEIGHT"}}:</strong> {{item.weight}}</p>{{/if}}
+        {{#if item.Craftsmanship}}<p><strong>{{localize "DRUG.CRAFTSMANSHIP"}}:</strong> {{item.Craftsmanship}}</p>{{/if}}
+        {{#if item.Availability}}<p><strong>{{localize "DRUG.AVAILABILITY"}}:</strong> {{item.Availability}}</p>{{/if}}
+        {{/if}}
+
+        {{#if item.isForceField}}
+        {{#if item.protectionRating}}<p><strong>{{localize "FORCE_FIELD.PROTECTION_RATING"}}:</strong> {{item.protectionRating}}</p>{{/if}}
+        {{#if item.overloadChance}}<p><strong>{{localize "FORCE_FIELD.OVERLOAD_CHANCE"}}:</strong> {{item.overloadChance}}</p>{{/if}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{#if item.weight}}<p><strong>{{localize "FORCE_FIELD.WEIGHT"}}:</strong> {{item.weight}}</p>{{/if}}
+        {{#if item.Craftsmanship}}<p><strong>{{localize "FORCE_FIELD.CRAFTSMANSHIP"}}:</strong> {{item.Craftsmanship}}</p>{{/if}}
+        {{#if item.Availability}}<p><strong>{{localize "FORCE_FIELD.AVAILABILITY"}}:</strong> {{item.Availability}}</p>{{/if}}
+        {{/if}}
+
+        {{#if item.isGear}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{#if item.weight}}<p><strong>{{localize "GEAR.WEIGHT"}}:</strong> {{item.weight}}</p>{{/if}}
+        {{#if item.Craftsmanship}}<p><strong>{{localize "GEAR.CRAFTSMANSHIP"}}:</strong> {{item.Craftsmanship}}</p>{{/if}}
+        {{#if item.Availability}}<p><strong>{{localize "GEAR.AVAILABILITY"}}:</strong> {{item.Availability}}</p>{{/if}}
+        {{/if}}
+
+        {{#if item.isMalignancy}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{/if}}
+
+        {{#if item.isMentalDisorder}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{/if}}
+
+        {{#if item.isMutation}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{/if}}
+
+        {{#if item.isPsychicPower}}
+        {{#if item.prerequisite}}<p><strong>{{localize "PSYCHIC_POWER.PREREQUISITE"}}:</strong> {{item.prerequisite}}</p>{{/if}}
+        {{#if item.action}}<p><strong>{{localize "PSYCHIC_POWER.ACTION"}}:</strong> {{item.action}}</p>{{/if}}
+        {{#if item.focusPower.test}}<p><strong>{{localize "PSYCHIC_POWER.FOCUS_POWER"}}:</strong> {{item.focusPower.test}}{{#if item.focusPower.difficulty}} ({{item.focusPower.difficulty}}){{/if}}</p>{{/if}}
+        {{#if item.range}}<p><strong>{{localize "PSYCHIC_POWER.RANGE"}}:</strong> {{item.range}}</p>{{/if}}
+        {{#if item.sustained}}<p><strong>{{localize "PSYCHIC_POWER.SUSTAINED"}}:</strong> {{item.sustained}}</p>{{/if}}
+        {{#if item.psychicType}}<p><strong>{{localize "PSYCHIC_POWER.SUBTYPE"}}:</strong> {{item.psychicType}}</p>{{/if}}
+        {{#if item.PsychicPowerZone}}<p><strong>{{localize "PSYCHIC_POWER.ZONE"}}:</strong> {{item.PsychicPowerZone}}</p>{{/if}}
+        {{#if item.damage.formula}}<p><strong>{{localize "PSYCHIC_POWER.DAMAGE_FULL"}}:</strong> {{item.damage.formula}}{{#if item.DamageType}} {{item.DamageType}}{{/if}}</p>{{/if}}
+        {{#if item.damage.penetration}}<p><strong>{{localize "PSYCHIC_POWER.PENETRATION"}}:</strong> {{item.damage.penetration}}</p>{{/if}}
+        {{#if item.damage.special}}<p><strong>{{localize "PSYCHIC_POWER.SPECIAL"}}:</strong> {{item.damage.special}}</p>{{/if}}
+        {{#if item.effect}}<p><strong>{{localize "PSYCHIC_POWER.EFFECT"}}:</strong> {{{item.effect}}}</p>{{/if}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{/if}}
+
+        {{#if item.isSpecialAbility}}
+        {{#if item.benefit}}<p><strong>{{localize "SPECIAL_ABILITY.BENEFIT"}}:</strong> {{item.benefit}}</p>{{/if}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{/if}}
+
+        {{#if item.isTalent}}
+        {{#if item.prerequisites}}<p><strong>{{localize "TALENT.PREREQUISITES"}}:</strong> {{item.prerequisites}}</p>{{/if}}
+        {{#if item.aptitudes}}<p><strong>{{localize "TALENT.APTITUDES"}}:</strong> {{item.aptitudes}}</p>{{/if}}
+        {{#if item.tier}}<p><strong>{{localize "TALENT.TIER"}}:</strong> {{item.tier}}</p>{{/if}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{/if}}
+
+        {{#if item.isTool}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{#if item.weight}}<p><strong>{{localize "TOOL.WEIGHT"}}:</strong> {{item.weight}}</p>{{/if}}
+        {{#if item.Craftsmanship}}<p><strong>{{localize "TOOL.CRAFTSMANSHIP"}}:</strong> {{item.Craftsmanship}}</p>{{/if}}
+        {{#if item.Availability}}<p><strong>{{localize "TOOL.AVAILABILITY"}}:</strong> {{item.Availability}}</p>{{/if}}
+        {{/if}}
+
+        {{#if item.isTrait}}
+        {{#if item.benefit}}<p><strong>{{localize "TRAIT.BENEFIT"}}:</strong> {{item.benefit}}</p>{{/if}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{/if}}
+
+        {{#if item.isWeapon}}
+        {{#if item.WeaponClass}}<p><strong>{{localize "WEAPON.CLASS"}}:</strong> {{item.WeaponClass}}</p>{{/if}}
+        {{#if item.range}}<p><strong>{{localize "WEAPON.RANGE"}}:</strong> {{item.range}}</p>{{/if}}
+        {{#if item.RateOfFire}}<p><strong>{{localize "WEAPON.RATE_OF_FIRE_FULL"}}:</strong> {{item.RateOfFire}}</p>{{/if}}
+        {{#if item.damage}}<p><strong>{{localize "WEAPON.DAMAGE_FULL"}}:</strong> {{item.damage}}{{#if item.DamageType}} {{item.DamageType}}{{/if}}</p>{{/if}}
+        {{#if item.penetration}}<p><strong>{{localize "WEAPON.PENETRATION_FULL"}}:</strong> {{item.penetration}}</p>{{/if}}
+        {{#if item.Clip}}<p><strong>{{localize "WEAPON.CLIP"}}:</strong> {{item.Clip}}</p>{{/if}}
+        {{#if item.reload}}<p><strong>{{localize "WEAPON.RELOAD_FULL"}}:</strong> {{item.reload}}</p>{{/if}}
+        {{#if item.special}}<p><strong>{{localize "WEAPON.SPECIAL"}}:</strong> {{item.special}}</p>{{/if}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{#if item.weight}}<p><strong>{{localize "WEAPON.WEIGHT"}}:</strong> {{item.weight}}</p>{{/if}}
+        {{#if item.Craftsmanship}}<p><strong>{{localize "WEAPON.CRAFTSMANSHIP"}}:</strong> {{item.Craftsmanship}}</p>{{/if}}
+        {{#if item.Availability}}<p><strong>{{localize "WEAPON.AVAILABILITY"}}:</strong> {{item.Availability}}</p>{{/if}}
+        {{/if}}
+
+        {{#if item.isWeaponModification}}
+        {{#if item.upgrades}}<p><strong>{{localize "WEAPON_MODIFICATION.UPGRADES"}}:</strong> {{item.upgrades}}</p>{{/if}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{#if item.weight}}<p><strong>{{localize "WEAPON_MODIFICATION.WEIGHT"}}:</strong> {{item.weight}}</p>{{/if}}
+        {{#if item.Craftsmanship}}<p><strong>{{localize "WEAPON_MODIFICATION.CRAFTSMANSHIP"}}:</strong> {{item.Craftsmanship}}</p>{{/if}}
+        {{#if item.Availability}}<p><strong>{{localize "WEAPON_MODIFICATION.AVAILABILITY"}}:</strong> {{item.Availability}}</p>{{/if}}
+        {{/if}}
+
+        {{#if item.isAptitude}}
+        {{#if item.description}}<p class="description-field"><strong>{{localize "HEADER.DESCRIPTION"}}:</strong> <span class="description-text">{{{nl2br (stripHtmlKeepBreaks item.description)}}}</span></p>{{/if}}
+        {{/if}}
+    </div>
+</div>
+
