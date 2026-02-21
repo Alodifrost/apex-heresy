@@ -599,7 +599,10 @@
         for (const damage of damages) {
             const penetrationValue = Number(damage.penetration) || 0;
             // _getArmour returns total which already includes toughnessBonus, so we don't subtract it again
-            let armour = Math.max(this._getArmour(damage.location) - penetrationValue, 0);
+            // Warp Weapon ignores worn armour, only uses natural bonus (toughnessBonus + tempModifier)
+            const weaponTraits = damage.weaponTraits || {};
+            const ignoreWornArmour = weaponTraits.warpWeapon === true;
+            let armour = Math.max(this._getArmour(damage.location, ignoreWornArmour) - penetrationValue, 0);
             const damageAmount = Number(damage.amount) || 0;
             let woundsToAdd = Math.max(damageAmount - armour, 0);
 
@@ -640,8 +643,10 @@
      * @returns {Promise<Actor>}             A Promise which resolves once the damage has been applied
      */
     async applyDamage(damages) {
-        if (this.system?.horde > 0) {
-            const beforeHorde = Number(this.system.horde) || 0;
+        // Use getter to get horde value from token if available
+        const currentHorde = Number(this.horde) || 0;
+        if (currentHorde > 0) {
+            const beforeHorde = currentHorde;
             let kills = 0;
             const weaponClass = damages?.[0]?.weaponClass;
             const weaponType = damages?.[0]?.weaponType;
@@ -653,7 +658,10 @@
                 for (const damage of damages) {
                     const penetrationValue = Number(damage.penetration) || 0;
                     // _getArmour returns total which already includes toughnessBonus, so we don't subtract it again
-                    const armour = Math.max(this._getArmour(damage.location) - penetrationValue, 0);
+                    // Warp Weapon ignores worn armour, only uses natural bonus (toughnessBonus + tempModifier)
+                    const weaponTraits = damage.weaponTraits || {};
+                    const ignoreWornArmour = weaponTraits.warpWeapon === true;
+                    const armour = Math.max(this._getArmour(damage.location, ignoreWornArmour) - penetrationValue, 0);
                     const damageAmount = Number(damage.amount) || 0;
                     const woundsToAdd = Math.max(damageAmount - armour, 0);
                     if (woundsToAdd > 0) {
@@ -668,7 +676,10 @@
                 for (const damage of damages) {
                     const penetrationValue = Number(damage.penetration) || 0;
                     // _getArmour returns total which already includes toughnessBonus, so we don't subtract it again
-                    const armour = Math.max(this._getArmour(damage.location) - penetrationValue, 0);
+                    // Warp Weapon ignores worn armour, only uses natural bonus (toughnessBonus + tempModifier)
+                    const weaponTraits = damage.weaponTraits || {};
+                    const ignoreWornArmour = weaponTraits.warpWeapon === true;
+                    const armour = Math.max(this._getArmour(damage.location, ignoreWornArmour) - penetrationValue, 0);
                     const damageAmount = Number(damage.amount) || 0;
                     const woundsToAdd = Math.max(damageAmount - armour, 0);
                     if (woundsToAdd > 0) {
@@ -693,7 +704,8 @@
             }
 
             if (kills <= 0) return this;
-            const newHorde = Math.max((Number(this.system.horde) || 0) - kills, 0);
+            // Use getter to get current horde value from token if available
+            const newHorde = Math.max((Number(this.horde) || 0) - kills, 0);
             this._suppressWoundsFloat = true;
             let result;
             try {
@@ -717,7 +729,10 @@
             // _getArmour returns total which already includes toughnessBonus, so we don't subtract it again
             // Ensure penetration is a valid number, defaulting to 0 if invalid
             const penetrationValue = Number(damage.penetration) || 0;
-            let armour = Math.max(this._getArmour(damage.location) - penetrationValue, 0);
+            // Warp Weapon ignores worn armour, only uses natural bonus (toughnessBonus + tempModifier)
+            const weaponTraits = damage.weaponTraits || {};
+            const ignoreWornArmour = weaponTraits.warpWeapon === true;
+            let armour = Math.max(this._getArmour(damage.location, ignoreWornArmour) - penetrationValue, 0);
             // Total already includes toughnessBonus, so we just use damage amount directly
             const damageAmount = Number(damage.amount) || 0;
 
@@ -784,7 +799,10 @@
             if (weaponTraits.shock) {
                 const anyDamageDealt = damages.some(d => {
                     const penetrationValue = Number(d.penetration) || 0;
-                    const armour = Math.max(this._getArmour(d.location) - penetrationValue, 0);
+                    // Warp Weapon ignores worn armour, only uses natural bonus (toughnessBonus + tempModifier)
+                    const weaponTraits = d.weaponTraits || {};
+                    const ignoreWornArmour = weaponTraits.warpWeapon === true;
+                    const armour = Math.max(this._getArmour(d.location, ignoreWornArmour) - penetrationValue, 0);
                     const damageAmount = Number(d.amount) || 0;
                     const woundsToAdd = Math.max(damageAmount - armour, 0);
                     return woundsToAdd > 0 || d.righteousFury;
@@ -973,21 +991,40 @@
      * @param {string} location
      * @returns {number} armour value for the location
      */
-    _getArmour(location) {
+    _getArmour(location, ignoreWornArmour = false) {
         // Use total directly from character sheet - it already includes toughnessBonus + value + tempModifier
         // This ensures we use the exact value displayed in the UI
+        // If ignoreWornArmour is true, only return natural bonus (toughnessBonus + tempModifier), ignoring worn armour (value)
         switch (location) {
             case "ARMOUR.HEAD":
+                if (ignoreWornArmour) {
+                    return Number((this.armour.head.toughnessBonus || 0) + (this.armour.head.tempModifier || 0));
+                }
                 return Number(this.armour.head.total || 0);
             case "ARMOUR.LEFT_ARM":
+                if (ignoreWornArmour) {
+                    return Number((this.armour.leftArm.toughnessBonus || 0) + (this.armour.leftArm.tempModifier || 0));
+                }
                 return Number(this.armour.leftArm.total || 0);
             case "ARMOUR.RIGHT_ARM":
+                if (ignoreWornArmour) {
+                    return Number((this.armour.rightArm.toughnessBonus || 0) + (this.armour.rightArm.tempModifier || 0));
+                }
                 return Number(this.armour.rightArm.total || 0);
             case "ARMOUR.BODY":
+                if (ignoreWornArmour) {
+                    return Number((this.armour.body.toughnessBonus || 0) + (this.armour.body.tempModifier || 0));
+                }
                 return Number(this.armour.body.total || 0);
             case "ARMOUR.LEFT_LEG":
+                if (ignoreWornArmour) {
+                    return Number((this.armour.leftLeg.toughnessBonus || 0) + (this.armour.leftLeg.tempModifier || 0));
+                }
                 return Number(this.armour.leftLeg.total || 0);
             case "ARMOUR.RIGHT_LEG":
+                if (ignoreWornArmour) {
+                    return Number((this.armour.rightLeg.toughnessBonus || 0) + (this.armour.rightLeg.tempModifier || 0));
+                }
                 return Number(this.armour.rightLeg.total || 0);
             default:
                 return 0;
@@ -1100,7 +1137,18 @@
 
     get threatLevel() { return this.system.threatLevel; }
 
-    get horde() { return this.system.horde; }
+    get horde() { 
+        // Priority: Get horde value from token on canvas if available (token actor instance)
+        // This ensures we get the actual horde value from the token, not the base actor
+        if (canvas?.ready && this.id) {
+            const tokens = canvas.tokens.placeables.filter(t => t.actor?.id === this.id);
+            if (tokens.length > 0) {
+                // Use token actor's horde value (actual instance on canvas)
+                return tokens[0].actor?.system?.horde ?? this.system.horde;
+            }
+        }
+        return this.system.horde; 
+    }
 
     get armour() { return this.system.armour; }
 
@@ -1727,11 +1775,6 @@ async function _applyRegeneration(rollData) {
  * @param {object} rollData
  */
 async function combatRoll(rollData) {
-    if (rollData.weapon.traits.spray && game.settings.get("dark-heresy", "useSpraytemplate")) {
-        let template = PlaceableTemplate.cone({ item: rollData.itemId, actor: rollData.ownerId },
-            30, rollData.weapon.range);
-        await template.drawPreview();
-    }
     if (rollData.attackType?.name === "suppression") {
         let template = PlaceableTemplate.cone({ item: rollData.itemId, actor: rollData.ownerId },
             45, rollData.weapon.range);
@@ -2234,7 +2277,8 @@ function _getHordeAttackBonus(rollData) {
     if (!target || !canvas?.ready) return 0;
     if (target.sceneId && canvas.scene?.id !== target.sceneId) return 0;
     const token = canvas.tokens.get(target.tokenId);
-    const hordeValue = Number(token?.actor?.system?.horde) || 0;
+    // Use getter to get horde value from token actor (actual instance on canvas)
+    const hordeValue = Number(token?.actor?.horde) || 0;
     if (hordeValue >= 115) return 60;
     if (hordeValue >= 85) return 50;
     if (hordeValue >= 55) return 40;
@@ -2282,13 +2326,8 @@ async function _computeCommonTarget(rollData) {
  * @returns {int} the final target number
  */
 function _getRollTarget(targetMod, baseTarget) {
-    if (targetMod > 60) {
-        return baseTarget + 60;
-    } else if (targetMod < -60) {
-        return baseTarget + -60;
-    } else {
-        return baseTarget + targetMod;
-    }
+    // No maximum limit - apply all modifiers as they are
+    return baseTarget + targetMod;
 }
 
 
@@ -2455,7 +2494,8 @@ async function _rollDamage(rollData) {
 
     let hordeBonusDice = Number(rollData.hordeDamageBonusDice) || 0;
     if (!rollData.hordeBonusApplied && !hordeBonusDice && rollData?.ownerId) {
-        const owner = game.actors.get(rollData.ownerId);
+        // Get actor from token on canvas if available, otherwise from collection
+        const owner = _getActorFromTokenOrCollection(rollData.ownerId, rollData.tokenId);
         hordeBonusDice = _getHordeDamageBonusDiceFromActor(owner);
     }
     if (rollData.hordeBonusApplied) {
@@ -2514,8 +2554,55 @@ function _getHordeDamageBonusDiceFromTarget(target) {
     return _getHordeDamageBonusDiceFromActor(token?.actor);
 }
 
+/**
+ * Get actor from token on canvas if available, otherwise from collection
+ * This ensures we get the actual token actor instance, not the base actor
+ * @param {string} actorId - Actor ID
+ * @param {string} tokenId - Optional token ID
+ * @returns {Actor|null} Actor from token if available, otherwise from collection
+ */
+function _getActorFromTokenOrCollection(actorId, tokenId = null) {
+    // Priority 1: Get actor from token on canvas (token actor instance)
+    if (tokenId && canvas?.ready) {
+        const token = canvas.tokens.get(tokenId);
+        if (token?.actor) {
+            return token.actor;
+        }
+    }
+    
+    // Priority 2: Try to find token by actor ID on current scene
+    if (actorId && canvas?.ready) {
+        const tokens = canvas.tokens.placeables.filter(t => t.actor?.id === actorId);
+        if (tokens.length > 0) {
+            return tokens[0].actor;
+        }
+    }
+    
+    // Priority 3: Fall back to actor from collection
+    if (actorId) {
+        return game.actors.get(actorId);
+    }
+    
+    return null;
+}
+
 function _getHordeDamageBonusDiceFromActor(actor) {
-    const hordeValue = Number(actor?.system?.horde) || 0;
+    if (!actor) return 0;
+    
+    // Priority: Get actor from token on canvas if available (token actor instance)
+    // This ensures we get the actual horde value from the token, not the base actor
+    let tokenActor = actor;
+    
+    // If actor has a token on canvas, use token actor instead
+    if (canvas?.ready && actor.id) {
+        const tokens = canvas.tokens.placeables.filter(t => t.actor?.id === actor.id);
+        if (tokens.length > 0) {
+            tokenActor = tokens[0].actor; // Use token actor (actual instance on canvas)
+        }
+    }
+    
+    // Use getter to get horde value from token actor (actual instance on canvas)
+    const hordeValue = Number(tokenActor?.horde) || 0;
     if (hordeValue <= 0) return 0;
     return Math.min(Math.floor(hordeValue / 10), 2);
 }
@@ -4595,8 +4682,7 @@ class DarkHeresyUtil {
             proven: this.extractNumberedTrait(/Proven.*\(\d\)|Проверенное.*\(\d\)|Надёжное.*\(\d\)/gi, traits),
             primitive: this.extractNumberedTrait(/Primitive.*\(\d\)|Примитивное.*\(\d\)/gi, traits),
             razorSharp: this.hasNamedTrait(/Razor.?-? *Sharp|Бритвенной остроты|Острое как бритва/gi, traits),
-            spray: this.hasNamedTrait(/Spray|Распыление/gi, traits),
-            skipAttackRoll: this.hasNamedTrait(/Spray|Распыление/gi, traits), // Currently, spray will always be the same as skipAttackRoll. However, in the future, there may be other skipAttackRoll weapons that are not Spray.
+            skipAttackRoll: this.hasNamedTrait(/Spray|Распыление/gi, traits), // Weapons that skip the attack roll
             tearing: this.hasNamedTrait(/Tearing|Разрывающее/gi, traits),
             storm: this.hasNamedTrait(/Storm|Шторм/gi, traits),
             // Twin-Linked can be either "+10 bonus" or "X1 extra hit"
@@ -4620,7 +4706,8 @@ class DarkHeresyUtil {
             unreliable: this.hasNamedTrait(/Unreliable|Ненадёжное|Ненадежное/gi, traits),
             unbalanced: this.hasNamedTrait(/Unbalanced|Несбалансированное/gi, traits),
             overheating: this.hasNamedTrait(/Overheating|Перегревающееся/gi, traits),
-            shock: this.hasNamedTrait(/Shock|Шоковое/gi, traits)
+            shock: this.hasNamedTrait(/Shock|Шоковое/gi, traits),
+            warpWeapon: this.hasNamedTrait(/Warp Weapon|Оружие Варпа|Варп-оружие/gi, traits)
         };
     }
 
@@ -4728,11 +4815,13 @@ class DarkHeresySheet extends ActorSheet {
         html.find(".roll-characteristic").click(async ev => await this._prepareRollCharacteristic(ev));
         html.find(".roll-skill").click(async ev => await this._prepareRollSkill(ev));
         html.find(".roll-speciality").click(async ev => await this._prepareRollSpeciality(ev));
+        html.find(".skill-create").click(async ev => await this._onSkillCreate(ev));
         html.find(".roll-insanity").click(async ev => await this._prepareRollInsanity(ev));
         html.find(".roll-corruption").click(async ev => await this._prepareRollCorruption(ev));
         html.find(".roll-regeneration").click(async ev => await this._prepareRollRegeneration(ev));
         html.find(".roll-weapon").click(async ev => await this._prepareRollWeapon(ev));
         html.find(".roll-weapon-damage").click(async ev => await this._prepareWeaponDamage(ev));
+        html.find(".weapon.item").contextmenu(async ev => await this._onWeaponContextMenu(ev));
         html.find(".toggle-equipped").click(async ev => await this._toggleEquipped(ev));
         html.find(".roll-psychic-power").click(async ev => await this._prepareRollPsychicPower(ev));
         html.find(".roll-psychic-damage").click(async ev => await this._preparePsychicDamage(ev));
@@ -5290,6 +5379,121 @@ class DarkHeresySheet extends ActorSheet {
         );
     }
 
+    async _onSkillCreate(event) {
+        event.preventDefault();
+        
+        // Get list of characteristics for selection
+        const characteristics = Object.entries(this.actor.characteristics).map(([key, char]) => ({
+            key: key,
+            label: game.i18n.localize(char.label) || char.label,
+            short: char.short
+        }));
+        
+        // Check if "Custom" skill exists, if not we'll need to get characteristic for it
+        const customSkill = this.actor.system.skills.custom;
+        const needsCharacteristic = !customSkill;
+        
+        // Create dialog HTML
+        const html = `
+            <form>
+                <div class="form-group">
+                    <label>${game.i18n.localize("SKILL.NAME") || "Skill Name"}</label>
+                    <input type="text" name="skillName" placeholder="${game.i18n.localize("SKILL.NAME") || "Skill Name"}" required />
+                </div>
+                ${needsCharacteristic ? `
+                <div class="form-group">
+                    <label>${game.i18n.localize("SKILL.CHARACTERISTIC") || "Characteristic"} (for Custom skill)</label>
+                    <select name="characteristic" required>
+                        ${characteristics.map(char => `<option value="${char.short}">${char.label} (${char.short})</option>`).join("")}
+                    </select>
+                </div>
+                ` : ''}
+            </form>
+        `;
+        
+        new Dialog({
+            title: game.i18n.localize("SKILL.CREATE_CUSTOM") || "Create Custom Skill",
+            content: html,
+            buttons: {
+                create: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: game.i18n.localize("BUTTON.CREATE") || "Create",
+                    callback: async (html) => {
+                        const form = html.find("form")[0];
+                        const formData = new FormData(form);
+                        const skillName = formData.get("skillName").trim();
+                        
+                        if (!skillName) {
+                            ui.notifications.warn(game.i18n.localize("SKILL.NAME_REQUIRED") || "Skill name is required");
+                            return;
+                        }
+                        
+                        // Create speciality key from name (slug)
+                        const specialityKey = skillName.toLowerCase()
+                            .replace(/[^a-z0-9]+/g, "_")
+                            .replace(/^_+|_+$/g, "");
+                        
+                        // Check if Custom skill exists
+                        let customSkill = this.actor.system.skills.custom;
+                        const updateData = {};
+                        
+                        if (!customSkill) {
+                            // Create Custom skill first
+                            const characteristic = formData.get("characteristic");
+                            if (!characteristic) {
+                                ui.notifications.warn(game.i18n.localize("SKILL.CHARACTERISTIC_REQUIRED") || "Characteristic is required");
+                                return;
+                            }
+                            
+                            updateData["system.skills.custom"] = {
+                                label: "Custom",
+                                characteristics: [characteristic],
+                                advance: -20,
+                                isSpecialist: true,
+                                specialities: {},
+                                aptitudes: [],
+                                starter: false,
+                                cost: 0
+                            };
+                            customSkill = updateData["system.skills.custom"];
+                        }
+                        
+                        // Check if speciality already exists
+                        if (customSkill.specialities && customSkill.specialities[specialityKey]) {
+                            ui.notifications.warn(game.i18n.localize("SKILL.ALREADY_EXISTS") || "Skill with this name already exists");
+                            return;
+                        }
+                        
+                        // Create speciality data
+                        const specialityData = {
+                            label: skillName,
+                            advance: -20, // Untrained by default
+                            starter: false,
+                            cost: 0
+                        };
+                        
+                        // Add speciality to Custom skill
+                        if (!updateData["system.skills.custom"]) {
+                            updateData["system.skills.custom"] = foundry.utils.deepClone(customSkill);
+                        }
+                        updateData["system.skills.custom"].specialities = foundry.utils.deepClone(customSkill.specialities || {});
+                        updateData["system.skills.custom"].specialities[specialityKey] = specialityData;
+                        
+                        // Update actor
+                        await this.actor.update(updateData);
+                        
+                        ui.notifications.info(game.i18n.format("SKILL.CREATED", { name: skillName }) || `Skill "${skillName}" created`);
+                    }
+                },
+                cancel: {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: game.i18n.localize("BUTTON.CANCEL") || "Cancel"
+                }
+            },
+            default: "create"
+        }).render(true);
+    }
+
     async _prepareRollInsanity(event) {
         event.preventDefault();
         await prepareCommonRoll(
@@ -5354,6 +5558,43 @@ class DarkHeresySheet extends ActorSheet {
         
         const rollData = DarkHeresyUtil.createWeaponRollData(this.actor, weapon);
         await openDirectDamageDialog(rollData);
+    }
+
+    async _onWeaponContextMenu(event) {
+        event.preventDefault();
+        const div = $(event.currentTarget).closest(".item");
+        const weapon = this.actor.items.get(div.data("itemId"));
+        
+        if (!weapon) return;
+        
+        // Check if weapon is equipped
+        if (weapon.system.equipped !== true) {
+            ui.notifications.warn(game.i18n.localize("WEAPON.NOT_EQUIPPED") || "Weapon must be equipped to use");
+            return;
+        }
+        
+        // Check if weapon is ranged (only ranged weapons can be reloaded)
+        if (weapon.class === "melee") {
+            ui.notifications.warn(game.i18n.localize("WEAPON.NOT_RANGED") || "Only ranged weapons can be reloaded");
+            return;
+        }
+        
+        // Get ownerId and tokenId
+        const ownerId = this.actor.id;
+        const tokenId = (this.actor.isToken && this.actor.token) ? this.actor.token.id : null;
+        
+        // Reload weapon
+        const reloadResult = await _reloadWeapon(weapon, ownerId, tokenId, true);
+        
+        if (!reloadResult.success) {
+            let message = game.i18n.localize("CHAT.RELOAD_FAILED") || "Failed to reload";
+            if (reloadResult.reason === "out_of_ammo") {
+                message = game.i18n.localize("CHAT.RELOAD_OUT_OF_AMMO") || "Out of ammunition";
+            } else if (reloadResult.reason === "no_ammunition") {
+                message = game.i18n.localize("CHAT.RELOAD_NO_AMMUNITION") || "Weapon has no ammunition configured";
+            }
+            ui.notifications.warn(message);
+        }
     }
 
     async _toggleEquipped(event) {
@@ -5447,7 +5688,7 @@ class AcolyteSheet extends DarkHeresySheet {
             template: "systems/dark-heresy/template/sheet/actor/acolyte.hbs",
             width: 700,
             height: 881,
-            resizable: false,
+            resizable: true,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
@@ -5511,7 +5752,7 @@ class NpcSheet extends DarkHeresySheet {
             template: "systems/dark-heresy/template/sheet/actor/npc.hbs",
             width: 700,
             height: 881,
-            resizable: false,
+            resizable: true,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
@@ -6704,6 +6945,14 @@ function registerHandlebarsHelpers() {
         return "0";
     });
 
+    Handlebars.registerHelper("safeLocalize", function(key) {
+        if (!key) return "";
+        const localized = game.i18n.localize(key);
+        // If localization returns the same value (key not found), return the key as-is
+        // This allows custom skills to use their label directly
+        return localized === key ? key : localized;
+    });
+
     Handlebars.registerHelper("isNpc", function(actor) {
         return actor?.type === "npc";
     });
@@ -7175,21 +7424,39 @@ function onTestClick(ev) {
         rollData.massEvasion.modifier = Number(rollData.evasionModifier) || 0;
         return prepareMassEvasionRoll(rollData);
     }
-    const targets = currentTargets.length
-        ? currentTargets
-        : fallbackTargets;
-    rollData.targets = targets.length ? [targets[0]] : undefined;
-    let actor = null;
-    const target = rollData?.targets?.[0];
+    // For non-GM players: always use their own actor unless they have permission for target
+    // This way players don't need to think about targeting - it just works
+    let actor = game.macro.getActor(); // Default to player's own actor
+    
+    // Only use target if:
+    // 1. Target exists and is valid
+    // 2. User is GM OR user owns the target actor
+    // Silently fall back to player's actor if no permission (no warnings)
+    const targets = currentTargets.length ? currentTargets : fallbackTargets;
+    const target = targets.length ? targets[0] : null;
+    
     if (target && canvas?.ready) {
-        if (!target.sceneId || canvas.scene?.id === target.sceneId) {
-            actor = canvas.tokens.get(target.tokenId)?.actor || null;
-        } else {
-            ui.notifications.warn(game.i18n.localize("NOTIFICATION.TARGET_DIFFERENT_SCENE") || "Target is in another scene.");
+        // Silently check if target is in current scene (no warning if different scene)
+        const isSameScene = !target.sceneId || canvas.scene?.id === target.sceneId;
+        if (isSameScene) {
+            try {
+                const targetActor = canvas.tokens.get(target.tokenId)?.actor || null;
+                // Only use target actor if user has permission (GM or owner)
+                // If no permission, silently use player's actor instead
+                if (targetActor && (game.user.isGM || targetActor.isOwner)) {
+                    actor = targetActor;
+                    rollData.targets = [target];
+                }
+            } catch (e) {
+                // Silently ignore any errors (e.g., permission issues) and use player's actor
+            }
         }
     }
-    if (!actor) {
-        actor = game.macro.getActor();
+    
+    // If no valid target was found, clear targets so it uses player's actor
+    // (rollData.targets is only set if we successfully used a target)
+    if (!rollData.targets) {
+        rollData.targets = undefined;
     }
 
     if (!actor) {
@@ -7214,12 +7481,19 @@ function onTestClick(ev) {
     rollData.flags.isCombatRoll = false;
     if (rollData.psy) rollData.psy.display = false;
     rollData.evasionActor = actor.name;
-    if (target?.tokenId) rollData.evasionActorTokenId = target.tokenId;
-    if (target?.sceneId) rollData.evasionActorSceneId = target.sceneId;
-    if (!rollData.evasionActorTokenId && actor?.token?.id) {
+    // Set token and scene IDs from target if available, otherwise from actor's token
+    const targetTokenId = rollData?.targets?.[0]?.tokenId;
+    const targetSceneId = rollData?.targets?.[0]?.sceneId;
+    
+    if (targetTokenId) {
+        rollData.evasionActorTokenId = targetTokenId;
+    } else if (actor?.token?.id) {
         rollData.evasionActorTokenId = actor.token.id;
     }
-    if (!rollData.evasionActorSceneId && actor?.token?.scene?.id) {
+    
+    if (targetSceneId) {
+        rollData.evasionActorSceneId = targetSceneId;
+    } else if (actor?.token?.scene?.id) {
         rollData.evasionActorSceneId = actor.token.scene.id;
     }
     rollData.name = `${game.i18n.localize("DIALOG.EVASION")}: ${actor.name}`;
@@ -7535,7 +7809,8 @@ async function sendMassDamageToChat(rollData) {
     }
     
     // Normalize damage type like in sendDamageToChat
-    const actor = rollData.ownerId ? game.actors.get(rollData.ownerId) : null;
+    // Get actor from token on canvas if available, otherwise from collection
+    const actor = rollData.ownerId ? _getActorFromTokenOrCollection(rollData.ownerId, rollData.tokenId) : null;
     const item = actor?.items?.get(rollData.itemId);
     if (!rollData.weapon) rollData.weapon = {};
     if (!rollData.weapon.damageType || rollData.weapon.damageType === "none") {
@@ -7717,7 +7992,8 @@ function _isHordeTarget(rollData) {
     if (!target || !canvas?.ready) return false;
     if (target.sceneId && canvas.scene?.id !== target.sceneId) return false;
     const token = canvas.tokens.get(target.tokenId);
-    const hordeValue = Number(token?.actor?.system?.horde) || 0;
+    // Use getter to get horde value from token actor (actual instance on canvas)
+    const hordeValue = Number(token?.actor?.horde) || 0;
     return hordeValue > 0;
 }
 
@@ -7796,10 +8072,20 @@ Hooks.on("preUpdateActor", (actor, changes) => {
         || foundry.utils.getProperty(changes, "system.wounds.critical") !== undefined;
     const hasHorde = foundry.utils.getProperty(changes, "system.horde") !== undefined;
     if (!hasWounds && !hasHorde) return;
+    
+    // Get actor from token on canvas if available (for actual horde value)
+    let tokenActor = actor;
+    if (canvas?.ready && actor.id) {
+        const tokens = canvas.tokens.placeables.filter(t => t.actor?.id === actor.id);
+        if (tokens.length > 0) {
+            tokenActor = tokens[0].actor; // Use token actor (actual instance on canvas)
+        }
+    }
+    
     actor._woundsFloatPrev = {
-        wounds: Number(actor.system?.wounds?.value) || 0,
-        critical: Number(actor.system?.wounds?.critical) || 0,
-        horde: Number(actor.system?.horde) || 0
+        wounds: Number(tokenActor.system?.wounds?.value) || 0,
+        critical: Number(tokenActor.system?.wounds?.critical) || 0,
+        horde: Number(tokenActor.horde) || 0 // Use getter to get horde from token if available
     };
 });
 
@@ -7817,9 +8103,17 @@ Hooks.on("updateActor", (actor, changes) => {
         _showWoundsFloat(actor, newTotal - oldTotal);
     }
     if (hasHorde) {
-        const newHorde = Number(actor.system?.horde) || 0;
+        // Get actor from token on canvas if available (for actual horde value)
+        let tokenActor = actor;
+        if (canvas?.ready && actor.id) {
+            const tokens = canvas.tokens.placeables.filter(t => t.actor?.id === actor.id);
+            if (tokens.length > 0) {
+                tokenActor = tokens[0].actor; // Use token actor (actual instance on canvas)
+            }
+        }
+        const newHorde = Number(tokenActor.horde) || 0; // Use getter to get horde from token if available
         const oldHorde = Number(prev.horde) || 0;
-        _showWoundsFloat(actor, newHorde - oldHorde, { invert: true });
+        _showWoundsFloat(tokenActor, newHorde - oldHorde, { invert: true });
     }
 });
 
@@ -8574,7 +8868,8 @@ function updateTokenHordeLabel(token) {
         return;
     }
 
-    const hordeValue = Number(actor.system?.horde);
+    // Use getter to get horde value from token actor (actual instance on canvas)
+    const hordeValue = Number(actor.horde);
     const shouldShow = Number.isFinite(hordeValue) && hordeValue > 0;
     if (!shouldShow) {
         if (token.hordeLabel) token.hordeLabel.visible = false;
@@ -8731,14 +9026,6 @@ Hooks.once("init", async function() {
         scope: "world",
         config: true,
         default: false,
-        type: Boolean
-    });
-    game.settings.register("dark-heresy", "useSpraytemplate", {
-        name: "Use Template with Spray Weapons",
-        hint: "If enabled, Spray Weapons will require the user to put down a template before the roll is made. Templates are NOT removed automatically",
-        scope: "client",
-        config: true,
-        default: true,
         type: Boolean
     });
 
@@ -9363,8 +9650,18 @@ Hooks.on("renderChatMessage", (message, html, data) => {
     // Handle fire effect willpower test button
     html.find(".roll-willpower-test").off("click").on("click", onFireWillpowerTestClick);
     
-    // Show/hide revert button based on current user's permissions, not message creator's
     const rollData = message.getFlag?.("dark-heresy", "rollData");
+    
+    // Hide "Roll Damage" button if user doesn't have permission to the actor who made the roll
+    if (rollData?.ownerId) {
+        const actor = game.actors.get(rollData.ownerId);
+        // If actor exists and user is not GM and doesn't own the actor, hide damage button
+        if (actor && !game.user.isGM && !actor.isOwner) {
+            html.find(".invoke-damage").hide();
+        }
+    }
+    
+    // Show/hide revert button based on current user's permissions, not message creator's
     if (rollData?.flags?.isDamageRoll) {
         const canRevert = _canManageDamageRevert();
         const revertContainer = html.find(".effect-buttons");

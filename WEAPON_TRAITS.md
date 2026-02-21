@@ -10,7 +10,6 @@ This document lists all weapon traits supported by the Apex Heresy system. These
 - **Proven (X)** - Where X is a number indicating minimum dice value
 - **Primitive (X)** - Where X is a number indicating maximum dice value
 - **Razor Sharp**
-- **Spray**
 - **Tearing**
 - **Storm**
 - **Twin-Linked** - Can be either "+10 bonus" variant or "X1 extra hit" variant
@@ -23,6 +22,7 @@ This document lists all weapon traits supported by the Apex Heresy system. These
 - **Unbalanced**
 - **Overheating**
 - **Shock**
+- **Warp Weapon** - Ignores worn armour, only uses natural armour bonus (Toughness bonus + modifiers)
 
 ## Notes
 

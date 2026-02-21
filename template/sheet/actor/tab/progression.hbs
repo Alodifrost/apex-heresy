@@ -161,6 +161,7 @@
         <h1>{{localize "TITLE.SKILLS"}}</h1>
         <div class="item-list">
             <div class="flex header">
+                <a class="button skill-create" title="Add Custom Skill"><i class="fas fa-plus"></i></a>
                 <b class="name">{{localize "SKILL.NAME"}}</b>
                 <b class="advance">{{localize "SKILL.ADVANCE"}}</b>
                 <b class="total">{{localize "SKILL.TOTAL"}}</b>
@@ -171,7 +172,7 @@
                 {{#each system.skills as |skill key|}}
                     {{#unless skill.isSpecialist}}
                         <div class="skill item flex row">
-                            <div class="name">{{localize skill.label}}</div>
+                            <div class="name">{{safeLocalize skill.label}}</div>
                             <select class="advance" name="system.skills.{{key}}.advance" data-dtype="Number">
                                 {{selectOptions (config "advanceStagesSkills") selected=skill.advance localize=true}}
                             </select>
@@ -184,7 +185,7 @@
                 {{#each system.skills as |skill key|}}
                     {{#if skill.isSpecialist}}
                         <div class="flex header">
-                            <b class="name">{{localize skill.label}}</b>
+                            <b class="name">{{safeLocalize skill.label}}</b>
                         </div>
                         {{#each skill.specialities as |speciality keySpe|}}
                             <div class="speciality item flex row">

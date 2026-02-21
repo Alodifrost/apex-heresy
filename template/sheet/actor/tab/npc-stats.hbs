@@ -127,13 +127,16 @@
     </div>
     <div class="skills border">
         <h1>{{localize "TITLE.SKILLS"}}</h1>
+        <div class="flex header" style="margin-bottom: 5px;">
+            <a class="button skill-create" title="Add Custom Skill"><i class="fas fa-plus"></i></a>
+        </div>
         <div class="flex row" style="flex-basis: 60%">
             <div class="flex column wrap" style="max-height: 330px;flex-basis: 50%">
                 {{#each system.skills as |skill key|}}
                     {{#unless skill.isSpecialist}}
                         <div class="skill">
                             <div class="name">
-                                <button class="roll-skill" data-skill="{{key}}" type="button">{{localize skill.label}}</button>
+                                <button class="roll-skill" data-skill="{{key}}" type="button">{{safeLocalize skill.label}}</button>
                             </div>
                             <input class="total" type="number" value="{{skill.total}}" data-dtype="Number" disabled />
                             <div class="information">
@@ -150,7 +153,7 @@
                     {{#if skill.isSpecialist}}
                         <div class="item-list">
                             <div class="flex header">
-                                <b class="name">{{localize skill.label}}</b>
+                                <b class="name">{{safeLocalize skill.label}}</b>
                             </div>
                             <div class="items" style="overflow-y: visible">
                                 {{#each skill.specialities as |speciality keySpe|}}

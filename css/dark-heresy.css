@@ -632,7 +632,7 @@ body:not(.no-theme) #chat-log .chat-message .message-header {
 body:not(.no-theme) #chat-log .chat-message .message-content,
 body:not(.no-theme) #chat-log .chat-message .message-text {
   font-family: "MinionPro", serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   color: #DDD;
 }
@@ -1898,7 +1898,7 @@ li.folder.collapsed > .folder-header {
   margin: 0 0 4px;
   color: #F0F0F0;
   font-family: "MinionPro", serif;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.5;
 }
 
@@ -1922,14 +1922,14 @@ li.folder.collapsed > .folder-header {
 .dark-heresy.chat strong {
   font-family: "MinionPro", serif;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 15px;
   color: #dcdcdc;
   letter-spacing: 0.2px;
 }
 
 .dark-heresy.chat span {
   font-family: "MinionPro", serif;
-  font-size: 13px;
+  font-size: 15px;
   color: #E8E8E8;
 }
 .dark-heresy.chat > .dice-rolls > .dice-roll-render {
@@ -5071,10 +5071,6 @@ li.folder.collapsed > .folder-header {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  background-image: url(../assets/ui/box-background.webp);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
   position: relative;
 }
 .dark-heresy .acolyte > * {
@@ -5262,14 +5258,14 @@ li.folder.collapsed > .folder-header {
   align-items: center;
   justify-content: flex-start;
   width: auto;
-  min-width: 60px;
-  max-width: 70px;
+  min-width: 75px;
+  max-width: 85px;
   box-sizing: border-box;
 }
 
 .dark-heresy .acolyte .header .fate label,
 .dark-heresy .acolyte .header .fatigue label {
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 700;
   color: #dcdcdc;
   text-transform: uppercase;
@@ -5297,14 +5293,14 @@ li.folder.collapsed > .folder-header {
 .dark-heresy .acolyte .header .fate input,
 .dark-heresy .acolyte .header .fatigue input {
   flex: 1 1 0;
-  min-width: 24px;
-  max-width: 28px;
+  min-width: 30px;
+  max-width: 34px;
   width: auto;
-  height: 18px;
+  height: 22px;
   margin: 0;
-  padding: 0 3px;
+  padding: 0 4px;
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   border: 1.5px solid var(--impmal-lightblue);
   border-radius: 2px;
@@ -5354,7 +5350,7 @@ li.folder.collapsed > .folder-header {
 .dark-heresy .acolyte .header .fate span,
 .dark-heresy .acolyte .header .fatigue span {
   color: #dcdcdc;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1;
   flex: 0 0 auto;
@@ -5367,10 +5363,6 @@ li.folder.collapsed > .folder-header {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  background-image: url(../assets/ui/box-background.webp);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
   position: relative;
 }
 .dark-heresy .npc > * {
@@ -5545,8 +5537,8 @@ li.folder.collapsed > .folder-header {
   align-items: center;
   justify-content: flex-start;
   width: auto;
-  min-width: 60px;
-  max-width: 70px;
+  min-width: 75px;
+  max-width: 85px;
   box-sizing: border-box;
 }
 
@@ -5580,14 +5572,14 @@ li.folder.collapsed > .folder-header {
 .dark-heresy .npc .header .fate input,
 .dark-heresy .npc .header .fatigue input {
   flex: 1 1 0;
-  min-width: 24px;
-  max-width: 28px;
+  min-width: 30px;
+  max-width: 34px;
   width: auto;
-  height: 18px;
+  height: 22px;
   margin: 0;
-  padding: 0 3px;
+  padding: 0 4px;
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   border: 1.5px solid var(--impmal-lightblue);
   border-radius: 2px;
@@ -5637,7 +5629,7 @@ li.folder.collapsed > .folder-header {
 .dark-heresy .npc .header .fate span,
 .dark-heresy .npc .header .fatigue span {
   color: #dcdcdc;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1;
   flex: 0 0 auto;
