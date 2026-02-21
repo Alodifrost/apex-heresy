@@ -2,7 +2,7 @@
   "id": "dark-heresy",
   "title": "Apex Heresy",
   "description": "Unofficial Foundry VTT System for Dark Heresy 2nd Edition/Black Crusade/Only War",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "minimumCoreVersion" : 11,
   "compatibility" : {
     "minimum" : 12,
